@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
+set(CMAKE_TOOLCHAIN_FILE "D:/Engineering/App/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "vcpkg toolchain")
 project(lab08 LANGUAGES CXX)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
@@ -98,7 +99,13 @@ target_link_libraries(lab08core PUBLIC
   stb
 )
 
-target_compile_options(lab08core PUBLIC -Wall -Wextra)
+if(MSVC)
+  target_compile_options(lab08core PUBLIC /W4)
+else()
+  target_compile_options(lab08core PUBLIC -Wall -Wextra -Werror)
+endif()
+
+# target_compile_options(lab08core PUBLIC -Wall -Wextra)
 
 find_program(GLSLC NAMES glslc glslangValidator)
 
